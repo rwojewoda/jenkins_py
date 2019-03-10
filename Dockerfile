@@ -3,8 +3,7 @@ FROM balenalib/raspberry-pi2-alpine-python:3-edge-build
 RUN echo "ipv6" >> /etc/modules
 RUN apk update
 RUN apk add alsa-utils
-RUN apk add pulseaudio
-RUN apk add  mpd
+RUN apk add mpd
 
 RUN groupadd mpd
 
