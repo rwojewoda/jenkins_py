@@ -6,6 +6,15 @@ pipeline {
         dockerImage = ''
       }
     stages {
+        stage('wtf') {
+            agent any
+             steps {
+                script {
+                    sh 'ls -a'
+                }
+             }
+
+         }
          stage('Deploy') {
             agent any
              steps {
