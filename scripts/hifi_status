@@ -1,0 +1,3 @@
+#!/bin/bash
+value=$(cat "scripts/stan_wiezy.txt") 
+echo $value

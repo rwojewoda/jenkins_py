@@ -1,0 +1,65 @@
+pipeline {
+    agent none
+      environment {
+        registry = "davout123/pi"
+        registryCredential = "docker_creds"
+        dockerImage = ''
+      }
+    stages {
+        stage('Maven'){
+            agent {
+                docker {
+                    image 'maven:3-alpine'
+                    args '-v /root/.m2:/root/.m2'
+                }
+            }
+        stages {
+                stage('Test') {
+                     steps {
+                         sh 'mvn test'
+                     }
+                 }
+                 stage('Build') {
+                     steps {
+                         sh 'mvn -B -DskipTests clean package'
+                     }
+                 }
+                 stage('Czy dziala') {
+                     steps {
+                        script {
+                            echo 'Deploying....'
+                        }
+                     }
+                 }
+            }
+        }
+
+         stage('Deploy') {
+            agent any
+             steps {
+                script {
+                    dockerImage = docker.build(registry)
+                      docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                      }
+                }
+             }
+
+         }
+
+        stage('Remote SSH') {
+            agent any
+            steps {
+                sshagent(['pi_key']) {
+                    sh 'ssh -o StrictHostKeyChecking=no pi@192.168.1.12 "./deploy.sh"'
+                }
+            }
+        }
+
+
+
+
+    }
+}
+
+

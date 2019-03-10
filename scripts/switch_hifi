@@ -1,0 +1,21 @@
+#!/bin/bash
+zero='0'
+jeden='1'
+value=$(cat "scripts/stan_wiezy.txt")
+if [ "$value" = "$jeden" ]; 
+then
+gpio write 0 1
+sleep 1
+gpio write 0 0
+echo "0" > scripts/stan_wiezy.txt
+mpc stop
+elif [ "$value" = "$zero" ]; 
+then
+gpio write 0 1
+sleep 1
+gpio write 0 0
+echo "1" > scripts/stan_wiezy.txt
+mpc play
+else
+echo "Error"
+fi
