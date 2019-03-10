@@ -1,8 +1,9 @@
 FROM balenalib/raspberry-pi2-alpine-python:3-edge-build
 
-RUN apk add alsa-utils alsa-utils-doc alsa-lib alsaconf
-RUN apk add -y pulseaudio
-RUN apk add -y mpd
+RUN apk update
+RUN apk add alsa-utils
+RUN apk add pulseaudio
+RUN apk add  mpd
 
 RUN groupadd mpd
 
