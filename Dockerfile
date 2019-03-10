@@ -1,4 +1,4 @@
 FROM acencini/rpi-python-serial-wiringpi
-RUN mkdir app
+RUN mkdir /app
 COPY app/* app
 EXPOSE 80
