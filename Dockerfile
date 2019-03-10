@@ -5,7 +5,7 @@ RUN apk update
 RUN apk add alsa-utils
 RUN apk add mpd
 
-RUN groupadd mpd
+RUN addgroup mpd
 
 ADD mpd.conf /etc/mpd.conf
 ADD start.sh /home/mpd/start.sh
