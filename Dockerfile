@@ -7,10 +7,10 @@ ENV MPC_VERSION 0.27-r0
 ARG user=mpd
 ARG group=audio
 
-RUN apk -q update \
-    && apk -q --no-progress add mpd="$MPD_VERSION" \
-    && apk -q --no-progress add mpc="$MPC_VERSION" \
-    && rm -rf /var/cache/apk/*
+RUN apk -q update
+RUN apk -q --no-progress add mpd="$MPD_VERSION"
+RUN apk -q --no-progress add mpc="$MPC_VERSION"
+RUN rm -rf /var/cache/apk/*
 
 RUN mkdir -p /var/lib/mpd/music \
     && mkdir -p /var/lib/mpd/playlists \
