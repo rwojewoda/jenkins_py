@@ -11,6 +11,7 @@ pipeline {
              steps {
                 script {
                     sh 'ls -a'
+                    sh 'docker run --rm --privileged multiarch/qemu-user-static:register --reset'
                 }
              }
 
