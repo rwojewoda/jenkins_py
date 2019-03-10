@@ -1,9 +1,8 @@
 FROM balenalib/raspberry-pi2-alpine-python:3-edge-build
 
-RUN apt -qq update --fix-missing
-RUN apt install -y alsa-utils 
-RUN apt install -y pulseaudio
-RUN apt install -y mpd
+RUN apk add -y alsa-utils 
+RUN apk add -y pulseaudio
+RUN apk add -y mpd
 
 RUN groupadd mpd
 
