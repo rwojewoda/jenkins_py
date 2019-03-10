@@ -1,2 +1,2 @@
-FROM acencini/rpi-python-serial-wiringpi
+FROM 3-edge-build
 EXPOSE 80
