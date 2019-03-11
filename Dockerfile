@@ -25,5 +25,5 @@ COPY mpd.conf /etc/mpd.conf
 
 # Entry point for mpc update and stuff
 EXPOSE 6600
-
+EXPOSE 8001
 CMD ["mpd", "--stdout", "--no-daemon"]
