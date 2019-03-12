@@ -14,6 +14,6 @@ RUN [ "cross-build-end" ]
 
 VOLUME ["/mpd/conf","/mpd/music","/mpd/playlists","/mpd/data","/run/mpd"]
  
-EXPOSE 6601 8001
+EXPOSE 6600 8000
 
 ENTRYPOINT ["/usr/bin/mpd", "--no-daemon", "--stdout", "/mpd/conf/mpd.conf"]
