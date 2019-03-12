@@ -24,6 +24,6 @@ VOLUME ["/var/lib/mpd/music", "/var/lib/mpd/playlists", "/var/lib/mpd/database"]
 COPY mpd.conf /etc/mpd.conf
 
 # Entry point for mpc update and stuff
-EXPOSE 6600
+EXPOSE 6601
 EXPOSE 8001
 CMD ["mpd", "--stdout", "--no-daemon"]
