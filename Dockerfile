@@ -1,29 +1,19 @@
 FROM balenalib/raspberry-pi2-alpine-python:3-edge-build
 
-ENV MPD_VERSION 0.19.12-r0
-ENV MPC_VERSION 0.27-r0
+RUN [ "cross-build-start" ]
 
-# https://docs.docker.com/engine/reference/builder/#arg
-ARG user=mpd
-ARG group=audio
+RUN set -x && apk --no-cache add \
+	mpd \
+	mpc \
+	&& mkdir -p /mpd/conf/ && mkdir -p /mpd/music && mkdir -p /mpd/playlists && mkdir -p /mpd/data && mkdir -p /run/mpd/ \
+	&& chown -R mpd:audio /mpd && chown -R mpd:audio /run/mpd/
 
-RUN apk -q update
-RUN apk -q --no-progress add mpd
-RUN apk -q --no-progress add mpc
-RUN rm -rf /var/cache/apk/*
+COPY mpd.conf /mpd/conf/mpd.conf
 
-RUN mkdir -p /var/lib/mpd/music \
-    && mkdir -p /var/lib/mpd/playlists \
-    && mkdir -p /var/lib/mpd/database \
-    &&  echo "" > /var/log/mpd/mpd.log \
-    && chown -R ${user}:${group} /var/lib/mpd \
-    && chown -R ${user}:${group} /var/log/mpd/mpd.log
+RUN [ "cross-build-end" ]
 
-# Declare a music , playlists and database volume (state, tag_cache and sticker.sql)
-VOLUME ["/var/lib/mpd/music", "/var/lib/mpd/playlists", "/var/lib/mpd/database"]
-COPY mpd.conf /etc/mpd.conf
+VOLUME ["/mpd/conf","/mpd/music","/mpd/playlists","/mpd/data","/run/mpd"]
+ 
+EXPOSE 6601 8001
 
-# Entry point for mpc update and stuff
-EXPOSE 6601
-EXPOSE 8001
-CMD ["mpd", "--stdout", "--no-daemon"]
+ENTRYPOINT ["/usr/bin/mpd", "--no-daemon", "--stdout", "/mpd/conf/mpd.conf"]
